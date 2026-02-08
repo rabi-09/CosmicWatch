@@ -19,5 +19,6 @@ export const ENV = {
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || "dummy",
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID || "dummy",
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET || "dummy",
-  FRONTEND_URL: process.env.FRONTEND_URL || "http://localhost:5173"
+  FRONTEND_URL: process.env.FRONTEND_URL || "http://localhost:5173",
+  BACKEND_URL: process.env.BACKEND_URL || "http://localhost:5000"
 };

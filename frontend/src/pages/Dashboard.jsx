@@ -15,9 +15,14 @@ const Dashboard = () => {
         fetchAsteroids();
     }, []);
 
+
     const fetchAsteroids = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/asteroids?limit=100");
+
+            const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+            const response = await axios.get(`${API_BASE_URL}/api/asteroids?limit=100`);
+
             if (response.data && response.data.asteroids) {
                 setAsteroids(response.data.asteroids);
             }

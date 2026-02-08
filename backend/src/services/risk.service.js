@@ -3,7 +3,7 @@ import { RiskAnalysis } from "../models/RiskAnalysis.js";
 import { Asteroid } from "../models/Asteroid.js";
 import { createRiskAlerts } from "./alert.service.js";
 
-const ML_SERVICE_URL = "http://localhost:5001/";
+const ML_SERVICE_URL = "https://cosmic-watch-model.onrender.com/";
 
 const predictRiskFromML = async (asteroid) => {
     try {
