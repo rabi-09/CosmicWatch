@@ -14,12 +14,6 @@ FEATURES = list(model.feature_names_in_)
 app = Flask(__name__)
 
 def decide_risk(p_low, p_med, p_high, pha, sentry, miss_au):
-    """
-    Hybrid logic:
-    1. Safety overrides (NASA-style)
-    2. Otherwise ML argmax
-    """
-
     if sentry == 1:
         return "HIGH"
 
@@ -32,10 +26,6 @@ def decide_risk(p_low, p_med, p_high, pha, sentry, miss_au):
         "HIGH": p_high
     }
     return max(probs, key=probs.get)
-
-# @app.route("/")
-# def home():
-#     return render_template("index.html")
 
 @app.route("/", methods=["POST"])
 def predict():
@@ -100,5 +90,5 @@ def asteroids():
         ]
     })
 
-if __name__ == "__main__":
-    app.run(port=5001, debug=True)
+# ❌ REMOVE app.run()
+# Gunicorn will handle execution
