@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-cosmic-bg: #030014;
+  --color-cosmic-accent: #7042f88b;
+  --color-cosmic-card: rgba(23, 25, 56, 0.4);
+  --color-space-cyan: #00f3ff;
+  --color-space-teal: #00ff9d;
+}
+
+body {
+  background-color: var(--color-cosmic-bg);
+  color: #ffffff;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(10, 10, 20, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 243, 255, 0.1);
+    box-shadow: 0 0 40px rgba(0, 243, 255, 0.05);
+  }
+
+  .tech-input {
+    background: rgba(0, 243, 255, 0.1);
+    border: 1px solid rgba(0, 243, 255, 0.3);
+    color: #ffffff;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .tech-input::placeholder {
+    color: rgba(0, 243, 255, 0.5);
+    font-weight: 400;
+  }
+
+  .tech-input:focus {
+    border-color: var(--color-space-cyan);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+    background: rgba(0, 243, 255, 0.15);
+    outline: none;
+  }
+
+  .tech-button {
+    background: rgba(0, 243, 255, 0.1);
+    border: 1px solid var(--color-space-cyan);
+    color: var(--color-space-cyan);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tech-button:hover {
+    background: var(--color-space-cyan);
+    color: #000;
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
+  }
+}
+
+/* Cosmic Background Animations */
+@keyframes twinkle {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 25s linear infinite;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite ease-in-out;
+}

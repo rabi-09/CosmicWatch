@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Asteroid Risk Predictor</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #0b1020, #111827);
+    color: #e5e7eb;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card {
+    width: 420px;
+    background: #0f172a;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #38bdf8;
+  }
+
+  label {
+    font-size: 14px;
+    margin-top: 12px;
+    display: block;
+    color: #cbd5f5;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 4px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background: #1e293b;
+    color: white;
+  }
+
+  button {
+    margin-top: 18px;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: #38bdf8;
+    color: #020617;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  button:hover {
+    background: #0ea5e9;
+  }
+
+  .result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    display: none;
+  }
+
+  .LOW { background: #064e3b; color: #a7f3d0; }
+  .MEDIUM { background: #78350f; color: #fde68a; }
+  .HIGH { background: #7f1d1d; color: #fecaca; }
+
+  .prob {
+    font-size: 14px;
+    margin-top: 10px;
+    color: #e5e7eb;
+  }
+
+  .note {
+    font-size: 12px;
+    margin-top: 15px;
+    color: #94a3b8;
+    text-align: center;
+  }
+</style>
+</head>
+
+<body>
+<div class="card">
+  <h2>Asteroid Risk Predictor</h2>
+
+  <label>Diameter (km)</label>
+  <input id="diameter" placeholder="e.g. 0.15">
+
+  <label>Velocity (km/s)</label>
+  <input id="velocity" placeholder="e.g. 18.2">
+
+  <label>Miss Distance (AU)</label>
+  <input id="miss" placeholder="e.g. 0.04">
+
+  <label>Absolute Magnitude</label>
+  <input id="magnitude" placeholder="e.g. 22.5">
+
+  <label>Potentially Hazardous Asteroid (PHA)</label>
+  <input id="pha" placeholder="0 = No, 1 = Yes">
+
+  <label>Sentry Object</label>
+  <input id="sentry" placeholder="0 = No, 1 = Yes">
+
+  <button onclick="predict()">Predict Risk</button>
+
+  <div id="result" class="result"></div>
+
+  <div class="note">
+    Prediction is probability-based and optimized for safety.
+  </div>
+</div>
+
+<script>
+async function predict() {
+  const payload = {
+    diameter_km: parseFloat(diameter.value),
+    velocity_kms: parseFloat(velocity.value),
+    miss_distance_au: parseFloat(miss.value),
+    absolute_magnitude: parseFloat(magnitude.value),
+    pha: parseInt(pha.value),
+    sentry: parseInt(sentry.value)
+  };
+
+  const res = await fetch("/predict", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+
+  const box = document.getElementById("result");
+  box.style.display = "block";
+  box.className = "result " + data.risk;
+
+  box.innerHTML = `
+    <strong>Risk Level: ${data.risk}</strong>
+    <div class="prob">
+      LOW: ${data.probabilities.LOW}<br>
+      MEDIUM: ${data.probabilities.MEDIUM}<br>
+      HIGH: ${data.probabilities.HIGH}
+    </div>
+  `;
+}
+</script>
+</body>
+</html>
